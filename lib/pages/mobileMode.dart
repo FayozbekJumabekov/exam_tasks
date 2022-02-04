@@ -18,131 +18,14 @@ class _MobilePageState extends State<MobilePage> {
   List<Widget> list = [];
 
   void initState() {
-
-    list.addAll(List.generate(10, (v) => Container(
-      height: 400,
-      margin: EdgeInsets.only(bottom: 10),
-      child: GridTile(
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/images/im_kitchen${v%4}.jpg")
-              )
-          ),
-          child: Container(
-
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.8),
-                      Colors.black.withOpacity(0.5),
-                      Colors.black.withOpacity(0.3),
-                      Colors.black.withOpacity(0.2)
-                    ]
-                )
-            ),
-          ),
-        ),
-        footer: Container(
-          alignment: Alignment.center,
-          height: 80,
-          color: Colors.white,
-          child: GridTileBar(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text( title[v%4] ,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),),
-                Text("\$\$\$",style: TextStyle(color: Colors.grey.shade700),),
-              ],
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(Icons.star,color: Colors.amber,),
-                    Icon(Icons.star,color: Colors.amber,),
-                    Icon(Icons.star,color: Colors.amber,),
-                    Icon(Icons.star,color: Colors.amber,),
-                    Icon((v.isEven)?Icons.star_outline_outlined:Icons.star_half,color: Colors.amber,)
-                  ],
-                ),
-                Text(locationRestaraunts[v%4],style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.w500),),
-              ],
-            ),
-          ),
-        ),
-      ),
-    )));
+    list.addAll(List.generate(10, (index) => postList(index)));
     super.initState();
   }
 
   void load() {
     print("load");
     setState(() {
-      list.addAll(List.generate(10, (v) => Container(
-        height: 400,
-        margin: EdgeInsets.only(bottom: 10),
-        child: GridTile(
-          child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/images/im_kitchen${v%4}.jpg")
-                )
-            ),
-            child: Container(
-
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        Colors.black.withOpacity(0.8),
-                        Colors.black.withOpacity(0.5),
-                        Colors.black.withOpacity(0.3),
-                        Colors.black.withOpacity(0.2)
-                      ]
-                  )
-              ),
-            ),
-          ),
-          footer: Container(
-            alignment: Alignment.center,
-            height: 80,
-            color: Colors.white,
-            child: GridTileBar(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text( title[v%4] ,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),),
-                  Text("\$\$\$",style: TextStyle(color: Colors.grey.shade700),),
-                ],
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.star,color: Colors.amber,),
-                      Icon(Icons.star,color: Colors.amber,),
-                      Icon(Icons.star,color: Colors.amber,),
-                      Icon(Icons.star,color: Colors.amber,),
-                      Icon((v.isEven)?Icons.star_outline_outlined:Icons.star_half,color: Colors.amber,)
-                    ],
-                  ),
-                  Text(locationRestaraunts[v%4],style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.w500),),
-                ],
-              ),
-            ),
-          ),
-        ),
-      )));
+      list.addAll(List.generate(10, (index) => postList(index)));
       print("data count = ${list.length}");
     });
   }
