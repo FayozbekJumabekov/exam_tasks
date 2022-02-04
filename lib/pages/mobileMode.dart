@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
 
@@ -10,10 +12,9 @@ class MobilePage extends StatefulWidget {
 }
 
 class _MobilePageState extends State<MobilePage> {
-  int get count => list.length;
+ int get count => list.length;
      List<String> title = ["Diner Steakhouse","Fire Hyper","Delli Turbo","Chizen Burak"];
    List<String> locationRestaraunts = ["Sushi * Seambe","Branch * Colorado Springs","Burgers * America","Kebab * Turkey"];
-
 
   List<Widget> list = [];
 
@@ -22,17 +23,17 @@ class _MobilePageState extends State<MobilePage> {
     super.initState();
   }
 
-  void load() {
+  void load([int? n]) {
     print("load");
     setState(() {
-      list.addAll(List.generate(10, (index) => postList(index)));
+        list.addAll(List.generate(10, (index) => postList(index+n!)));
       print("data count = ${list.length}");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -76,24 +77,19 @@ class _MobilePageState extends State<MobilePage> {
               )),
         ),
       ),
-      body: Container(
-        child: RefreshIndicator(
-          child: LoadMore(
-            isFinish: count >= 100,
-            onLoadMore: _loadMore,
-            child: ListView.builder(
-              padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
-                itemCount: count,
-                itemBuilder: (context,index){
-              return postList(index);
-
-            }),
-            whenEmptyLoad: false,
-            delegate: DefaultLoadMoreDelegate(),
-            textBuilder: DefaultLoadMoreTextBuilder.english,
+      body: RefreshIndicator(
+        child: LoadMore(
+          isFinish: count >= 100,
+          onLoadMore: _loadMore,
+          child: ListView(
+            padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+            children: List.generate(
+                count, (index) => list[index]),
           ),
-          onRefresh: _refresh,
+          delegate: DefaultLoadMoreDelegate(),
+          textBuilder: DefaultLoadMoreTextBuilder.english,
         ),
+        onRefresh: _refresh,
       ),
     );
   }
@@ -101,19 +97,20 @@ class _MobilePageState extends State<MobilePage> {
   Future<bool> _loadMore() async {
     print("onLoadMore");
     await Future.delayed(Duration(seconds: 0, milliseconds: 2000));
-    load();
+    load(0);
     return true;
   }
 
   Future<void> _refresh() async {
+    int n= Random().nextInt(3);
     await Future.delayed(Duration(seconds: 0, milliseconds: 2000));
     list.clear();
-    load();
+    load(n);
   }
   Widget postList(int index) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
-      width: MediaQuery.of(context).size.width,
+      height: 300,
+
       margin: EdgeInsets.only(bottom: 10),
       child: GridTile(
         child: Container(
